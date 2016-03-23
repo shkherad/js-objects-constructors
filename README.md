@@ -31,8 +31,8 @@ let batman = {
   name: 'Bruce Wayne',
   alias: 'The Bat-man',
 
-  power: function() {
-    return 'Super wealthy and super pissed off';
+  usePower: function() {
+    return 'Spend money and hit people';
   }
 }
 ```
@@ -44,15 +44,15 @@ let wonderWoman = {
   name: 'Diana Prince',
   alias: 'Wonder Woman',
 
-  power: function() {
-    return 'Deflects bullets with bracelets';
+  usePower: function() {
+    return 'Deflect bullets with bracelets';
   }
 }
 ```
 
 Why is this not a good answer?
 
-Because *copy-and-paste is one of the biggest source of errors* in software
+Because *copy-and-paste is one of the biggest sources of errors* in software
  development.
 
 ## Lab: Model a Hero
@@ -78,15 +78,15 @@ reduce duplication in our objects, while allowing the difference to vary by
 only defining the differences when we *construct* the new object.
 
 ```js
-const powerMethod = function () {
+const usePower = function () {
   return this._power;
 };
 
-const Hero = function (name, alias, powerDescription) {
+const Hero = function (name, alias, power) {
   this.name = name;
   this.alias = alias;
-  this._power = powerDescription;
-  this.power = powerMethod;
+  this.power = power;
+  this.usePower = usePower;
 };
 ```
 
@@ -109,23 +109,23 @@ functions?
 
 We defined a method inside the the `Hero` constructor, but doing that is a Bad
  Idea<sup>TM</sup>.  JavaScript allows it, but **don't do it**.
-We'll see the right way to achieve a near identical, and preferred, result
+We'll see the right way to achieve a near identical and preferred result
  shortly.
 
-Now, let's make `wonderWoman` using the constructor function instead of an
+Now, let's create `wonderWoman` using the constructor function instead of an
  object literal:
 
 ```js
 let wonderWoman = new Hero('Diana Prince',
                            'Wonder Woman',
-                           'Deflects bullets with bracelets');
+                           'Deflect bullets with bracelets');
 //=> undefined
 
 wonderWoman;
 /* => { name: 'Diana Prince',
   alias: 'Wonder Woman',
-  _power: 'Deflects bullets with bracelets',
-  power: [Function] }
+  power: 'Deflects bullets with bracelets',
+  usePower: [Function] }
   */
 ```
 
